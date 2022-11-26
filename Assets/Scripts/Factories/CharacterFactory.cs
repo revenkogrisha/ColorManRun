@@ -28,7 +28,8 @@ public class CharacterFactory : MonoBehaviour
         }
 
         agentMovement.SetTarget(target);
-        agentMovement.SetSpeed();
+        agentMovement.ApplyTargetLayer();
+        agentMovement.ApplySpeed();
         return character;
     }
 }

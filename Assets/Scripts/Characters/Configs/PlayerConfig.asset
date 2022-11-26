@@ -15,5 +15,5 @@ MonoBehaviour:
   _healthAmount: 10
   _damageAmount: 5
   _damageResistance: 0
-  _stunDuration: 0
+  _stunDuration: 1
   _movementSpeed: 5

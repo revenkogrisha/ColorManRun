@@ -6,9 +6,13 @@ using DG.Tweening;
 public class CharacterDamageDisplay : MonoBehaviour
 {
     [SerializeField] private Character _character;
+
+    [Header("Color")]
+    [SerializeField] private bool _displayColor = false;
     [SerializeField] private MeshRenderer[] _renderers;
     [SerializeField] private Color _damageColor;
 
+    [Header("Scale")]
     [SerializeField] [Range(0f, 0.3f)] private float _scaleDuration;
     [SerializeField] [Range(0.5f, 1f)] private float _scaleAmount;
     [SerializeField] [Range(0f, 1)] private float _displayDurationInSeconds;
@@ -34,21 +38,9 @@ public class CharacterDamageDisplay : MonoBehaviour
     public void DisplayDamage()
     {
         DisplayScale();
-        StartCoroutine(DisplayColor());
-    }
 
-    private void DisplayDeath()
-    {
-        DOTween.Sequence()
-            .Append(transform.DOScale(0f, _scaleDuration))
-            .AppendInterval(_destroyDelay)
-            .AppendCallback(ApplyDeath);
-        
-    }
-
-    private void ApplyDeath()
-    {
-        Destroy(gameObject);
+        if (_displayColor)
+            StartCoroutine(DisplayColor());
     }
 
     private void DisplayScale()
@@ -79,5 +71,18 @@ public class CharacterDamageDisplay : MonoBehaviour
             originalColors.Add(renderers[i].material.color);
 
         return originalColors.ToArray();
+    }
+
+    private void DisplayDeath()
+    {
+        DOTween.Sequence()
+            .Append(transform.DOScale(0f, _scaleDuration))
+            .AppendInterval(_destroyDelay)
+            .AppendCallback(ApplyDeath);
+    }
+
+    private void ApplyDeath()
+    {
+        Destroy(gameObject);
     }
 }

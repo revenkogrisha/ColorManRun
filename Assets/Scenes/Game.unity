@@ -1079,7 +1079,7 @@ GameObject:
   - component: {fileID: 971150669}
   - component: {fileID: 971150670}
   - component: {fileID: 971150671}
-  m_Layer: 9
+  m_Layer: 2
   m_Name: HitSphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1205,13 +1205,13 @@ CharacterController:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1242016696}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: e44c8a4f0ae4de741b5dc4ed1edb8465, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Height: 2
   m_Radius: 0.5
-  m_SlopeLimit: 45
+  m_SlopeLimit: 30
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
@@ -1229,6 +1229,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _statsConfig: {fileID: 11400000, guid: 2949ac1ec322c44438ad85872d47eb4d, type: 2}
+--- !u!114 &1242016704
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1242016696}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da51f9ad79af90b48885d8f46fe16631, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _character: {fileID: 1242016703}
+  _displayColor: 0
+  _renderers: []
+  _damageColor: {r: 0, g: 0, b: 0, a: 0}
+  _scaleDuration: 0.132
+  _scaleAmount: 0.811
+  _displayDurationInSeconds: 0.064
 --- !u!1001 &1252187289
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1551,7 +1570,7 @@ MonoBehaviour:
     type: 3}
   _originTransform: {fileID: 1242016698}
   _spawnRadius: 15
-  _countInGroup: 3
+  _countInGroup: 1
 --- !u!114 &2095013453
 MonoBehaviour:
   m_ObjectHideFlags: 0
