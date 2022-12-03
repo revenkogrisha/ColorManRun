@@ -3,15 +3,19 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
-[RequireComponent(typeof(Character), typeof(NavMeshAgent))]
 public class AgentMovement : MonoBehaviour
 {
+    [Header("Components")]
+    [SerializeField] private Character _character;
+    [SerializeField] private NavMeshAgent _navMeshAgent;
+    [SerializeField] private Animator _animator;
+
+    [Header("Settings")]
     [SerializeField] private float _stopDistance = 3f;
     [SerializeField] [Range(0, 1.5f)] private float _movementBlockDuration = 1f;
 
-    private Character _character;
-    private NavMeshAgent _navMeshAgent;
-    private Transform _target;
+    private CharacterAnimator _characterAnimator;
+    private AgentTarget _target;
     private Transform _transform;
     private LayerMask _targetLayer;
     private bool _isMovementBlocked = false;
@@ -32,9 +36,21 @@ public class AgentMovement : MonoBehaviour
         StartCoroutine(Move());
     }
 
+    private void OnEnable()
+    {
+        OnMovementStarted += _characterAnimator.EnableRunning;
+        OnMovementStopped += _characterAnimator.DisableRunning;
+    }
+    
+    private void OnDisable()
+    {
+        OnMovementStarted -= _characterAnimator.EnableRunning;
+        OnMovementStopped -= _characterAnimator.DisableRunning;
+    }
+
     #endregion
 
-    public void SetTarget(Transform target) => _target = target;
+    public void SetTarget(AgentTarget target) => _target = target;
 
     public void ApplyTargetLayer() => _targetLayer = _target.gameObject.layer;
 
@@ -42,8 +58,7 @@ public class AgentMovement : MonoBehaviour
 
     private void InitFields()
     {
-        _character = GetComponent<Character>();
-        _navMeshAgent = GetComponent<NavMeshAgent>();
+        _characterAnimator = new(_animator);
         _transform = transform;
     }
 
@@ -65,20 +80,23 @@ public class AgentMovement : MonoBehaviour
         if (!_target)
             return;
 
-        _navMeshAgent.SetDestination(_target.position);
+        var targetTransform = _target.transform;
+        var targetPosition = targetTransform.position;
+        _navMeshAgent.SetDestination(targetPosition);
     }
 
-    private bool TryStopInFrontOfTarget()
+    private void TryStopInFrontOfTarget()
     {
         var raycast = Physics.Raycast(_transform.position, _transform.forward, out var hit);
-        if (raycast)
-            if (!_isMovementBlocked && hit.collider.gameObject.layer == _targetLayer && hit.distance < _stopDistance)
-            {
-                StartCoroutine(BlockMovement());
-                return true;
-            }
+        if (!raycast)
+            return;
 
-        return false;
+        if (_isMovementBlocked
+            || hit.collider.gameObject.layer != _targetLayer
+            || hit.distance >= _stopDistance)
+            return;
+
+        StartCoroutine(BlockMovement());
     }
 
     private IEnumerator BlockMovement()

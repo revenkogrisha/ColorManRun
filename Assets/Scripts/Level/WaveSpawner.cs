@@ -4,19 +4,29 @@ using UnityTools;
 [RequireComponent(typeof(Timer))]
 public class WaveSpawner : MonoBehaviour
 {
-    [SerializeField] private CharacterFactory _factory;
+    [Header("Components")]
     [SerializeField] private GroundCheck _groundCheck;
-    [SerializeField] private Character _characterPrefab;
-    [SerializeField] private Transform _originTransform;
-    [SerializeField] private float _spawnRadius;
-    [SerializeField] private int _countInGroup;
 
+    [Header("Characters")]
+    [SerializeField] private Character _characterPrefab;
+    [Tooltip("Set if factory uses NavMesh or demands it")]
+    [SerializeField] private AgentTarget _target;
+    [SerializeField] private StatsConfig _statsConfig;
+
+    [Header("Spawn settings")]
+    [Tooltip("Transform that characters would be spawned around")]
+    [SerializeField] private Transform _originTransform;
+    [SerializeField] [Range(0f, 20f)] private float _spawnRadius = 15f;
+    [SerializeField] [Range(0, 4)] private int _countInGroup = 3;
+
+    private ICharacterFactory _factory;
     private Timer _timer;
 
     #region MonoBehaviour
 
     private void Awake()
     {
+        _factory = new AgentCharacterFactory(_target);
         _timer = GetComponent<Timer>();
     }
 
@@ -43,7 +53,8 @@ public class WaveSpawner : MonoBehaviour
 
             var character = Instantiate(_characterPrefab, spawnPosition, Quaternion.identity);
 
-            _factory.InitCharacter(character);
+            character = _factory.InitStats(character, _statsConfig);
+            character = TrySetupMovement(character, _factory);
 
             i++;
         }
@@ -58,5 +69,14 @@ public class WaveSpawner : MonoBehaviour
             center.x + offset.x,
             center.y,
             center.z + offset.y);
+    }
+
+    private Character TrySetupMovement(Character character, ICharacterFactory factory)
+    {
+        if (factory is not IMoveableCharacterFactory moveableFactory)
+            return character;
+
+        character = moveableFactory.SetupMovement(character);
+        return character;
     }
 }

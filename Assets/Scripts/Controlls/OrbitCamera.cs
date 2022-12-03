@@ -3,6 +3,7 @@ using UnityEngine;
 public class OrbitCamera : MonoBehaviour
 {
     [SerializeField] private Transform _target;
+
     private Transform _transform;
     private Vector3 _offset;
 
