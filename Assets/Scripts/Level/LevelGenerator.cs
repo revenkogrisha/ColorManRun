@@ -1,31 +1,49 @@
+using System;
 using UnityEngine;
+using UnityEngine.AI;
 
-public class LevelGenerator : MonoBehaviour
+public class LevelGenerator
 {
-    [SerializeField] private Platform[] _platformsPrefabs;
-    [SerializeField] private int _platformsPerLevel = 3;
+    private ISurfaceGenerator _surfaceGenerator;
+    private INavMeshSurfaceGenerator _navGenerator;
+    private CharacterSpawner _characterSpawner;
+    private PlayerCharacter _playerPrefab;
+    private TargetCharacter _targetPrefab;
 
-    private float _platformLength = 30f;
-    private float _spawnOffset = 0f;
+    public event Action<TargetCharacter> OnTargetSpawned;
+    public event Action<PlayerCharacter> OnPlayerSpawned;
 
-    private void Start()
+    public LevelGenerator(
+        ISurfaceGenerator surfaceGenerator, 
+        CharacterSpawner characterSpawner, 
+        PlayerCharacter playerPrefab, 
+        TargetCharacter targetPrefab)
     {
-        GenerateRandom();
+        _surfaceGenerator = surfaceGenerator;
+        _navGenerator = new NavMeshSurfaceGenerator();
+        _characterSpawner = characterSpawner;
+        _playerPrefab = playerPrefab;
+        _targetPrefab = targetPrefab;
     }
 
-    private void GenerateRandom()
+    public void GenerateLevel(
+        FinishTarget finish,
+        NavMeshSurface navSurface,
+        Vector3 playerSpawnPosition, 
+        Vector3 targetSpawnPosition)
     {
-        for (var i = 0; i < _platformsPerLevel; i++)
-            SpawnRandomPlatform();
+        GenerateSuface(navSurface);
+
+        var player = _characterSpawner.Spawn(_playerPrefab, playerSpawnPosition);
+        OnPlayerSpawned?.Invoke(player);
+
+        var target = _characterSpawner.SpawnAgent(_targetPrefab, finish, targetSpawnPosition);
+        OnTargetSpawned?.Invoke(target);
     }
 
-    private void SpawnRandomPlatform()
+    private void GenerateSuface(NavMeshSurface surface)
     {
-        var random = Random.Range(0, _platformsPrefabs.Length);
-        var platform = _platformsPrefabs[random];
-
-        Instantiate(platform, Vector3.forward * _spawnOffset, Quaternion.identity);
-
-        _spawnOffset += _platformLength;
+        _surfaceGenerator.GenerateSurface();
+        _navGenerator.GenerateSurface(surface);
     }
 }

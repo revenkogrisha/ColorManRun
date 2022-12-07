@@ -1,19 +1,14 @@
-public class AgentCharacterFactory : IMoveableCharacterFactory
+public class AgentCharacterFactory : CharacterFactory, IMoveableCharacterFactory
 {
-    private AgentTarget _target;
+    private readonly AgentTarget _target;
 
     public AgentCharacterFactory(AgentTarget target)
     {
         _target = target;
     }
 
-    public Character InitStats(Character character, StatsConfig config)
-    {
-        character.InitStats(config);
-        return character;
-    }
-
-    public Character SetupMovement(Character character)
+    public T SetupMovement<T>(T character)
+        where T : Character
     {
         if (!character.TryGetComponent<AgentMovement>(out var agentMovement))
             return character;

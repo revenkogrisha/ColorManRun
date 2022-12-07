@@ -1,14 +1,17 @@
 using UnityEngine;
 
-public class GroundCheck : MonoBehaviour
+public class GroundCheck
 {
-    [SerializeField] private LayerMask _groundLayer;
-    [SerializeField] private Transform _checkSphere;
-    [SerializeField] private float _checkRadius;
+    private readonly LayerMask _groundLayer;
 
-    public bool IsOnGround =>
-        Physics.CheckSphere(_checkSphere.position, _checkRadius, _groundLayer);
+    public GroundCheck(LayerMask groundLayer)
+    {
+        _groundLayer = groundLayer;
+    }
 
-    public bool CheckGroundOnPosition(Vector3 position) =>
-        Physics.CheckSphere(position, _checkRadius, _groundLayer);
+    public bool CheckGroundOnPosition(Vector3 position, float checkRadius) =>
+        Physics.CheckSphere(position, checkRadius, _groundLayer);
+
+    public bool CheckGroundOnPosition(Vector3 position, float checkRadius, LayerMask groundLayer) =>
+        Physics.CheckSphere(position, checkRadius, groundLayer);
 }

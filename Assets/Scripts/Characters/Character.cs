@@ -26,7 +26,7 @@ public class Character : MonoBehaviour
         OnDamageTaken?.Invoke();
     }
 
-    protected virtual void Die()
+    protected void Die()
     {
         OnCharacterDied?.Invoke();
     }

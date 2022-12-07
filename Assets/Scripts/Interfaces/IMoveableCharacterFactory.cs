@@ -1,4 +1,4 @@
 public interface IMoveableCharacterFactory : ICharacterFactory
 {
-    public Character SetupMovement(Character character);
+    public T SetupMovement<T>(T character) where T : Character;
 }

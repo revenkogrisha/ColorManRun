@@ -14,12 +14,12 @@ public class AgentMovement : MonoBehaviour
     [SerializeField] private float _stopDistance = 3f;
     [SerializeField] [Range(0, 1.5f)] private float _movementBlockDuration = 1f;
 
-    private CharacterAnimator _characterAnimator;
+    private MovementAnimator _characterAnimator;
     private AgentTarget _target;
     private Transform _transform;
     private LayerMask _targetLayer;
     private bool _isMovementBlocked = false;
-    private float _moveUpdateInterval = 0.1f;
+    private readonly float _moveUpdateInterval = 0.1f;
 
     public event Action OnMovementStarted;
     public event Action OnMovementStopped;
@@ -30,8 +30,7 @@ public class AgentMovement : MonoBehaviour
     {
         InitFields();
 
-        if (!_navMeshAgent.isOnNavMesh)
-            Destroy(gameObject);
+        CheckIfIsOnNavMesh();
 
         StartCoroutine(Move());
     }
@@ -62,14 +61,20 @@ public class AgentMovement : MonoBehaviour
         _transform = transform;
     }
 
+    private void CheckIfIsOnNavMesh()
+    {
+        if (!_navMeshAgent.isOnNavMesh)
+            Destroy(gameObject);
+    }
+
     private IEnumerator Move()
     {
         while (true)
         {
-            yield return new WaitForSeconds(_moveUpdateInterval);
-
             TrySetDestination();
             TryInvokeMovementEvents();
+
+            yield return new WaitForSeconds(_moveUpdateInterval);
         }
     }
 

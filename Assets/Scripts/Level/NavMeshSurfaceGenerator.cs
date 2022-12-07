@@ -1,7 +1,6 @@
-using UnityEngine;
 using UnityEngine.AI;
 
-public class NavMeshSurfaceGenerator
+public class NavMeshSurfaceGenerator : INavMeshSurfaceGenerator
 {
-    public void GenerateNavMeshSurface(NavMeshSurface surface) => surface.BuildNavMesh();
+    public void GenerateSurface(NavMeshSurface surface) => surface.BuildNavMesh();
 }

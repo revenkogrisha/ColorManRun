@@ -1,19 +1,18 @@
 using System;
 using UnityEngine;
 
-public class RelativeMovement : MonoBehaviour
+public class RelativeMovement : MonoBehaviour, IMoveable
 {
     [Header("Components")]
     [SerializeField] private CharacterController _characterController;
-    [SerializeField] private DynamicJoystick _joystick;
     [SerializeField] private Animator _animator;
 
     [Header("Settings")]
-    [SerializeField] private float _speed = 15f;
-    [SerializeField] private float _rotationSpeed = 15f;
+    [SerializeField] private float _speed = 5f;
+    [SerializeField] private float _rotationSpeed = 10f;
 
     private Transform _transform;
-    private CharacterAnimator _characterAnimator;
+    private MovementAnimator _characterAnimator;
 
     public event Action OnRunStarted;
     public event Action OnRunEnded;
@@ -38,13 +37,11 @@ public class RelativeMovement : MonoBehaviour
         OnRunEnded -= _characterAnimator.DisableRunning;
     }
 
-    private void Update() => TryMove();
-
     #endregion
 
-    private void TryMove()
+    public void TryMove(Vector3 movement)
     {
-        var movement = GetMovementVector();
+        movement = UpdateSpeed(movement, _speed);
         if (movement.x == 0 && movement.z == 0)
         {
             OnRunEnded?.Invoke();
@@ -59,15 +56,10 @@ public class RelativeMovement : MonoBehaviour
         Move(movement);
     }
 
-    private Vector3 GetMovementVector()
+    private Vector3 UpdateSpeed(Vector3 movement, float speed)
     {
-        var movement = new Vector3(
-            _joystick.Horizontal,
-            0,
-            _joystick.Vertical);
-
-        movement *= _speed;
-        movement = Vector3.ClampMagnitude(movement, _speed);
+        movement *= speed;
+        movement = Vector3.ClampMagnitude(movement, speed);
         return movement;
     }
 

@@ -1,4 +1,4 @@
 public interface ISurfaceGenerator
 {
-    public void Generate();
+    public void GenerateSurface();
 }
