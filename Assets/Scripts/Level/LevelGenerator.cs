@@ -27,23 +27,32 @@ public class LevelGenerator
     }
 
     public void GenerateLevel(
-        FinishTarget finish,
         NavMeshSurface navSurface,
         Vector3 playerSpawnPosition, 
         Vector3 targetSpawnPosition)
     {
-        GenerateSuface(navSurface);
+        var finish = GenerateSuface(navSurface);
 
-        var player = _characterSpawner.Spawn(_playerPrefab, playerSpawnPosition);
-        OnPlayerSpawned?.Invoke(player);
-
-        var target = _characterSpawner.SpawnAgent(_targetPrefab, finish, targetSpawnPosition);
-        OnTargetSpawned?.Invoke(target);
+        SpawnPlayer(playerSpawnPosition);
+        SpawnTarget(targetSpawnPosition, finish);
     }
 
-    private void GenerateSuface(NavMeshSurface surface)
+    private FinishTarget GenerateSuface(NavMeshSurface surface)
     {
-        _surfaceGenerator.GenerateSurface();
+        var finish = _surfaceGenerator.GenerateSurface();
         _navGenerator.GenerateSurface(surface);
+        return finish;
+    }
+
+    private void SpawnPlayer(Vector3 playerSpawnPosition)
+    {
+        var player = _characterSpawner.Spawn(_playerPrefab, playerSpawnPosition);
+        OnPlayerSpawned?.Invoke(player);
+    }
+
+    private void SpawnTarget(Vector3 targetSpawnPosition, FinishTarget finish)
+    {
+        var target = _characterSpawner.SpawnAgent(_targetPrefab, finish, targetSpawnPosition);
+        OnTargetSpawned?.Invoke(target);
     }
 }

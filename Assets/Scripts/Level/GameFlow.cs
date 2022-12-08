@@ -9,18 +9,18 @@ public class GameFlow : MonoBehaviour
 
     [Header("Player")]
     [SerializeField] private Joystick _joystick;
-    [SerializeField] private OrbitCamera _orbitCamera;
+    [SerializeField] private Camera _camera;
 
     [Header("Prefabs")]
     [SerializeField] private PlayerCharacter _playerPrefab;
     [SerializeField] private TargetCharacter _targetPrefab;
 
     [Header("Level")]
-    [SerializeField] private FinishTarget _finish;
     [SerializeField] private NavMeshSurface _navSurface;
     [SerializeField] private Vector3 _playerSpawnPosition = Vector3.forward;
     [SerializeField] private Vector3 _targetSpawnPosition = Vector3.zero;
         
+    private OrbitCamera _orbitCamera;
     private LevelGenerator _levelGenerator;
     private PlayerJoystickInput _playerInput;
 
@@ -37,23 +37,20 @@ public class GameFlow : MonoBehaviour
     private void OnEnable()
     {
         _levelGenerator.OnPlayerSpawned += TrySetupPlayerInput;
-        _levelGenerator.OnPlayerSpawned += SetupCamera;
+        _levelGenerator.OnPlayerSpawned += InitCamera;
     }
     
     private void OnDisable()
     {
         _levelGenerator.OnPlayerSpawned -= TrySetupPlayerInput;
-        _levelGenerator.OnPlayerSpawned -= SetupCamera;
+        _levelGenerator.OnPlayerSpawned -= InitCamera;
     }
 
-    private void Start() =>
-        _levelGenerator.GenerateLevel(
-            _finish,
-            _navSurface,
-            _playerSpawnPosition,
-            _targetSpawnPosition);
+    private void Start() => GenerateLevel(_levelGenerator);
 
     private void Update() => TryMovePlayer();
+
+    private void LateUpdate() => _orbitCamera.TryApplyCameraTransform();
 
     #endregion
 
@@ -65,13 +62,19 @@ public class GameFlow : MonoBehaviour
         _playerInput = new(_joystick, movement);
     }
 
-    private void SetupCamera(PlayerCharacter player)
+    private void InitCamera(PlayerCharacter player)
     {
         var playerTransform = player.transform;
-        _orbitCamera.SetTarget(playerTransform);
-
         var playerPosition = playerTransform.position;
-        _orbitCamera.Init(playerPosition);
+        _orbitCamera = new(_camera, playerTransform, playerPosition);
+    }
+
+    private void GenerateLevel(LevelGenerator generator)
+    {
+        generator.GenerateLevel(
+            _navSurface,
+            _playerSpawnPosition,
+            _targetSpawnPosition);
     }
 
     private void TryMovePlayer() => _playerInput.Move();
