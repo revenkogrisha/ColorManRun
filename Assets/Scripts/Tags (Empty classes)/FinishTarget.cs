@@ -1,1 +1,6 @@
-public class FinishTarget : AgentTarget { }
+using SaveTheGuy.Characters;
+
+namespace SaveTheGuy.Level
+{
+    public class FinishTarget : AgentTarget { }
+}

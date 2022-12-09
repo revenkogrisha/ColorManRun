@@ -1,8 +1,11 @@
 using UnityEngine;
 
-public class FinishPlatform : MonoBehaviour
+namespace SaveTheGuy.Level
 {
-    [SerializeField] private FinishTarget _finish;
+    public class FinishPlatform : MonoBehaviour
+    {
+        [SerializeField] private FinishTarget _finish;
 
-    public FinishTarget Finish => _finish;
+        public FinishTarget Finish => _finish;
+    }
 }

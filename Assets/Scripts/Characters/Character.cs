@@ -1,33 +1,36 @@
 using System;
 using UnityEngine;
 
-public class Character : MonoBehaviour
+namespace SaveTheGuy.Characters
 {
-    private Statistics _stats;
-
-    public Statistics Stats => _stats;
-
-    public event Action OnDamageTaken;
-    public event Action OnCharacterDied;
-
-    public void InitStats(StatsConfig statsConfig) => _stats = new(statsConfig);
-
-    public void TakeDamage(float amount)
+    public class Character : MonoBehaviour
     {
-        var damage = amount - _stats.DamageResistance;
-        _stats.HealthAmount -= damage;
+        private Statistics _stats;
 
-        if (_stats.HealthAmount <= 0)
+        public Statistics Stats => _stats;
+
+        public event Action OnDamageTaken;
+        public event Action OnCharacterDied;
+
+        public void InitStats(StatsConfig statsConfig) => _stats = new(statsConfig);
+
+        public void TakeDamage(float amount)
         {
-            Die();
-            return;
+            var damage = amount - _stats.DamageResistance;
+            _stats.HealthAmount -= damage;
+
+            if (_stats.HealthAmount <= 0)
+            {
+                Die();
+                return;
+            }
+
+            OnDamageTaken?.Invoke();
         }
 
-        OnDamageTaken?.Invoke();
-    }
-
-    protected void Die()
-    {
-        OnCharacterDied?.Invoke();
+        protected void Die()
+        {
+            OnCharacterDied?.Invoke();
+        }
     }
 }

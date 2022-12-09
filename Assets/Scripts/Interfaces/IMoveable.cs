@@ -1,6 +1,9 @@
 using UnityEngine;
 
-public interface IMoveable
+namespace SaveTheGuy.Characters
 {
-    public void TryMove(Vector3 movement);
+    public interface IMoveable
+    {
+        public void TryMove(Vector3 movement);
+    }
 }

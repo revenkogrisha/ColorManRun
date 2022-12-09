@@ -1,3 +1,6 @@
 using UnityEngine;
 
-public class AgentTarget : MonoBehaviour { }
+namespace SaveTheGuy.Characters
+{
+    public class AgentTarget : MonoBehaviour { }
+}

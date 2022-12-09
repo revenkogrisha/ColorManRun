@@ -1,4 +1,7 @@
-public interface ISurfaceGenerator
+namespace SaveTheGuy.Level
 {
-    public FinishTarget GenerateSurface();
+    public interface ISurfaceGenerator
+    {
+        public FinishTarget GenerateSurface();
+    }
 }

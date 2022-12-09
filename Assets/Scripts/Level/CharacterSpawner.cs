@@ -1,37 +1,42 @@
+using SaveTheGuy.Characters;
+using SaveTheGuy.Factories;
 using UnityEngine;
 
-public class CharacterSpawner : MonoBehaviour
+namespace SaveTheGuy.Level
 {
-
-    public Character Spawn(Character characterPrefab, StatsConfig config, Vector3 position)
+    public class CharacterSpawner : MonoBehaviour
     {
-        var character = Instantiate(characterPrefab, position, Quaternion.identity);
 
-        var factory = new CharacterFactory();
-        character = factory.InitStats(character, config);
-        return character;
-    }
-    public T Spawn<T>(T characterPrefab, Vector3 position) 
-        where T : CharacterAwakeInit =>
-        Instantiate(characterPrefab, position, Quaternion.identity);
+        public Character Spawn(Character characterPrefab, StatsConfig config, Vector3 position)
+        {
+            var character = Instantiate(characterPrefab, position, Quaternion.identity);
 
-    public Character SpawnAgent(Character characterPrefab, StatsConfig config, AgentTarget target, Vector3 position)
-    {
-        var character = Instantiate(characterPrefab, position, Quaternion.identity);
+            var factory = new CharacterFactory();
+            character = factory.InitStats(character, config);
+            return character;
+        }
+        public T Spawn<T>(T characterPrefab, Vector3 position) 
+            where T : CharacterAwakeInit =>
+            Instantiate(characterPrefab, position, Quaternion.identity);
 
-        var factory = new AgentCharacterFactory(target);
-        character = factory.InitStats(character, config);
-        character = factory.SetupMovement(character);
-        return character;
-    }
+        public Character SpawnAgent(Character characterPrefab, StatsConfig config, AgentTarget target, Vector3 position)
+        {
+            var character = Instantiate(characterPrefab, position, Quaternion.identity);
 
-    public T SpawnAgent<T>(T characterPrefab, AgentTarget target, Vector3 position) 
-        where T : CharacterAwakeInit
-    {
-        var character = Instantiate(characterPrefab, position, Quaternion.identity);
+            var factory = new AgentCharacterFactory(target);
+            character = factory.InitStats(character, config);
+            character = factory.SetupMovement(character);
+            return character;
+        }
 
-        var factory = new AgentCharacterFactory(target);
-        character = factory.SetupMovement(character);
-        return character;
+        public T SpawnAgent<T>(T characterPrefab, AgentTarget target, Vector3 position) 
+            where T : CharacterAwakeInit
+        {
+            var character = Instantiate(characterPrefab, position, Quaternion.identity);
+
+            var factory = new AgentCharacterFactory(target);
+            character = factory.SetupMovement(character);
+            return character;
+        }
     }
 }

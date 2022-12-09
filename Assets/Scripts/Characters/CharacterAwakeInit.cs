@@ -1,8 +1,11 @@
 using UnityEngine;
 
-public class CharacterAwakeInit : Character
+namespace SaveTheGuy.Characters
 {
-    [SerializeField] private StatsConfig _statsConfig;
+    public class CharacterAwakeInit : Character
+    {
+        [SerializeField] private StatsConfig _statsConfig;
 
-    private void Awake() => InitStats(_statsConfig);
+        private void Awake() => InitStats(_statsConfig);
+    }
 }

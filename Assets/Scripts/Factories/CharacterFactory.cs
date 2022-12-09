@@ -1,8 +1,13 @@
-public class CharacterFactory : ICharacterFactory
+using SaveTheGuy.Characters;
+
+namespace SaveTheGuy.Factories
 {
-    public Character InitStats(Character character, StatsConfig config)
+    public class CharacterFactory : ICharacterFactory
     {
-        character.InitStats(config);
-        return character;
+        public Character InitStats(Character character, StatsConfig config)
+        {
+            character.InitStats(config);
+            return character;
+        }
     }
 }

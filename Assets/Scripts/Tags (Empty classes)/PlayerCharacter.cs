@@ -1,1 +1,4 @@
-public class PlayerCharacter : CharacterAwakeInit { }
+namespace SaveTheGuy.Characters
+{
+    public class PlayerCharacter : CharacterAwakeInit { }
+}

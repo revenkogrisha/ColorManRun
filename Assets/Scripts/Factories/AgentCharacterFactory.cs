@@ -1,22 +1,27 @@
-public class AgentCharacterFactory : CharacterFactory, IMoveableCharacterFactory
+using SaveTheGuy.Characters;
+
+namespace SaveTheGuy.Factories
 {
-    private readonly AgentTarget _target;
-
-    public AgentCharacterFactory(AgentTarget target)
+    public class AgentCharacterFactory : CharacterFactory, IMoveableCharacterFactory
     {
-        _target = target;
-    }
+        private readonly AgentTarget _target;
 
-    public T SetupMovement<T>(T character)
-        where T : Character
-    {
-        if (!character.TryGetComponent<AgentMovement>(out var agentMovement))
+        public AgentCharacterFactory(AgentTarget target)
+        {
+            _target = target;
+        }
+
+        public T SetupMovement<T>(T character)
+            where T : Character
+        {
+            if (!character.TryGetComponent<AgentMovement>(out var agentMovement))
+                return character;
+
+            agentMovement.SetTarget(_target);
+            agentMovement.ApplyTargetLayer();
+            agentMovement.ApplySpeed();
+
             return character;
-
-        agentMovement.SetTarget(_target);
-        agentMovement.ApplyTargetLayer();
-        agentMovement.ApplySpeed();
-
-        return character;
+        }
     }
 }

@@ -1,15 +1,18 @@
 using UnityEngine;
 
-public class MovementAnimator
+namespace SaveTheGuy.Characters
 {
-    public const string Running = nameof(Running);
-    public const string Jumped = nameof(Jumped);
+    public class MovementAnimator
+    {
+        public const string Running = nameof(Running);
+        public const string Jumped = nameof(Jumped);
 
-    private Animator _animator;
+        private Animator _animator;
 
-    public MovementAnimator(Animator animator) => _animator = animator;
+        public MovementAnimator(Animator animator) => _animator = animator;
 
-    public void EnableRunning() => _animator.SetBool(Running, true);
+        public void EnableRunning() => _animator.SetBool(Running, true);
 
-    public void DisableRunning() => _animator.SetBool(Running, false);
+        public void DisableRunning() => _animator.SetBool(Running, false);
+    }
 }

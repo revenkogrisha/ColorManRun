@@ -1,3 +1,6 @@
 using UnityEngine;
 
-public class Platform : MonoBehaviour { }
+namespace SaveTheGuy.Level
+{
+    public class Platform : MonoBehaviour { }
+}

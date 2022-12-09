@@ -1,6 +1,9 @@
 using UnityEngine.AI;
 
-public interface INavMeshSurfaceGenerator
+namespace SaveTheGuy.Level
 {
-    public void GenerateSurface(NavMeshSurface surface);
+    public interface INavMeshSurfaceGenerator
+    {
+        public void GenerateSurface(NavMeshSurface surface);
+    }
 }

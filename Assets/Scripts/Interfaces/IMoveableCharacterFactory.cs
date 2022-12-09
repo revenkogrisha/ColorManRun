@@ -1,4 +1,9 @@
-public interface IMoveableCharacterFactory : ICharacterFactory
+using SaveTheGuy.Characters;
+
+namespace SaveTheGuy.Factories
 {
-    public T SetupMovement<T>(T character) where T : Character;
+    public interface IMoveableCharacterFactory : ICharacterFactory
+    {
+        public T SetupMovement<T>(T character) where T : Character;
+    }
 }

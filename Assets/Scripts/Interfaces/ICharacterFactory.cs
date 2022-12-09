@@ -1,4 +1,9 @@
-public interface ICharacterFactory
+using SaveTheGuy.Characters;
+
+namespace SaveTheGuy.Factories
 {
-    public Character InitStats(Character character, StatsConfig config);
+    public interface ICharacterFactory
+    {
+        public Character InitStats(Character character, StatsConfig config);
+    }
 }
