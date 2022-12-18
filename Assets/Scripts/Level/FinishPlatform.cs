@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace SaveTheGuy.Level
 {
-    public class FinishPlatform : MonoBehaviour
+    public class FinishPlatform : Platform
     {
         [SerializeField] private FinishTarget _finish;
 

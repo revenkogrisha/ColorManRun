@@ -6,7 +6,11 @@ namespace SaveTheGuy.Level
     {
         [Header("Platforms")]
         [SerializeField] private FinishPlatform _finishPlatformPrefab;
-        [SerializeField] private Platform[] _platformsPrefabs;
+        [SerializeField] private SimplePlatform[] _platformsPrefabs;
+
+        [Header("Platforms' parent")]
+        [Tooltip("Opional")]
+        [SerializeField] private LevelObjectsParent _parent;
 
         [Header("Settings")]
         [SerializeField] private int _platformsPerLevel = 3;
@@ -51,16 +55,21 @@ namespace SaveTheGuy.Level
             _offset += _platformLength;
         }
 
-        private void SpawnPlatform(Platform platform)
+        private T SpawnPlatform<T>(T prefab)
+            where T : Platform
         {
             var position = Vector3.forward * _offset;
-            Instantiate(platform, position, Quaternion.identity);
-        }
+            T platform;
+            if (_parent)
+            {
+                platform = Instantiate(prefab, position, Quaternion.identity);
+                platform.transform.SetParent(_parent.transform);
+            }
+            else
+            {
+                platform = Instantiate(prefab, position, Quaternion.identity);
+            }
 
-        private FinishPlatform SpawnPlatform(FinishPlatform prefab)
-        {
-            var position = Vector3.forward * _offset;
-            var platform = Instantiate(prefab, position, Quaternion.identity);
             return platform;
         }
 
