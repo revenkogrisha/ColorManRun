@@ -1,9 +1,10 @@
-using SaveTheGuy.Characters;
+using ColorManRun.Characters;
+using ColorManRun.Level;
 using System;
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace SaveTheGuy.Level
+namespace ColorManRun.Generators
 {
     public class LevelGenerator
     {

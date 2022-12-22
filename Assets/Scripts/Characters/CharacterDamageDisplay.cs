@@ -1,7 +1,7 @@
 using DG.Tweening;
 using UnityEngine;
 
-namespace SaveTheGuy.Characters
+namespace ColorManRun.Characters
 {
     public class CharacterDamageDisplay : MonoBehaviour
     {

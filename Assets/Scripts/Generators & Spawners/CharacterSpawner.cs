@@ -1,12 +1,11 @@
-using SaveTheGuy.Characters;
-using SaveTheGuy.Factories;
+using ColorManRun.Characters;
+using ColorManRun.Factories;
 using UnityEngine;
 
-namespace SaveTheGuy.Level
+namespace ColorManRun.Generators
 {
     public class CharacterSpawner : MonoBehaviour
     {
-
         public Character Spawn(Character characterPrefab, StatsConfig config, Vector3 position)
         {
             var character = Instantiate(characterPrefab, position, Quaternion.identity);

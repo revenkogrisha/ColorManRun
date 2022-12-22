@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace SaveTheGuy.Control
+namespace ColorManRun.Control
 {
     public class PlayerInput
     {

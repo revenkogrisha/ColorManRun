@@ -1,11 +1,11 @@
-using SaveTheGuy.Characters;
-using SaveTheGuy.Control;
+using ColorManRun.Characters;
+using ColorManRun.Control;
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace SaveTheGuy.Level
+namespace ColorManRun.Generators
 {
-    public class GameFlow : MonoBehaviour
+    public class GameStart : MonoBehaviour
     {
         [Header("Components")]
         [SerializeField] private PlatformGenerator _platformGenerator;
@@ -13,7 +13,7 @@ namespace SaveTheGuy.Level
 
         [Header("Player")]
         [SerializeField] private Joystick _joystick;
-        [SerializeField] private Camera _camera;
+        [SerializeField] private OrbitCamera _orbitCamera;
 
         [Header("Prefabs")]
         [SerializeField] private PlayerCharacter _playerPrefab;
@@ -22,7 +22,6 @@ namespace SaveTheGuy.Level
         [SerializeField] private NavMeshSurface _navSurface;
         [SerializeField] private Vector3 _playerSpawnPosition = Vector3.forward;
         
-        private OrbitCamera _orbitCamera;
         private LevelGenerator _levelGenerator;
 
         #region MonoBehaviour
@@ -52,18 +51,13 @@ namespace SaveTheGuy.Level
             GenerateLevel(_levelGenerator);
         }
 
-        private void LateUpdate()
-        {
-            _orbitCamera.TryApplyCameraTransform();
-        }
-
         #endregion
 
         private void InitCamera(PlayerCharacter player)
         {
             var playerTransform = player.transform;
             var playerPosition = playerTransform.position;
-            _orbitCamera = new(_camera, playerTransform, playerPosition);
+            _orbitCamera.Init(playerTransform, playerPosition);
         }
 
         private void InitPlayerMovement(PlayerCharacter player)

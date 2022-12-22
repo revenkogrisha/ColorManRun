@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace SaveTheGuy.Characters
+namespace ColorManRun.Characters
 {
     public class MovementAnimator
     {

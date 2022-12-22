@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-namespace SaveTheGuy.Characters
+namespace ColorManRun.Characters
 {
     public class Fight : MonoBehaviour
     {

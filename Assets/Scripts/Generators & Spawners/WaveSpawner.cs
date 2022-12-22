@@ -1,9 +1,10 @@
-using SaveTheGuy.Characters;
-using SaveTheGuy.Factories;
+using ColorManRun.Characters;
+using ColorManRun.Factories;
+using ColorManRun.Level;
 using UnityEngine;
 using UnityTools;
 
-namespace SaveTheGuy.Level
+namespace ColorManRun.Generators
 {
     [RequireComponent(typeof(Timer))]
     public class WaveSpawner : MonoBehaviour

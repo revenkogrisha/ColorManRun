@@ -1,6 +1,6 @@
 using UnityEngine.AI;
 
-namespace SaveTheGuy.Level
+namespace ColorManRun.Generators
 {
     public class NavMeshSurfaceGenerator : INavMeshSurfaceGenerator
     {

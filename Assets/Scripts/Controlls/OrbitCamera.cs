@@ -1,22 +1,29 @@
 using UnityEngine;
 
-namespace SaveTheGuy.Control
+namespace ColorManRun.Control
 {
-    public class OrbitCamera
+    public class OrbitCamera : MonoBehaviour
     {
+        [Header("Components")]
+        [SerializeField] private Camera _camera;
+        
+        [Header("Settings")]
+        [SerializeField] private Vector3 _cameraOffset = new(0f, 4f, -10f);
+
         private Transform _target;
         private Transform _transform;
-        private Vector3 _cameraOffset = new(0f, 4f, -10f);
         private Vector3 _distanceToTarget;
 
-        public OrbitCamera(Camera camera, Transform target, Vector3 playerPosition)
+        public void Init(Transform target, Vector3 targetPosition)
         {
-            _transform = camera.transform;
             _target = target;
+            _transform = _camera.transform;
 
-            SetPosition(playerPosition);
+            SetPosition(targetPosition);
             _distanceToTarget = _target.position - _transform.position;
         }
+
+        private void LateUpdate() => TryApplyCameraTransform();
 
         public void TryApplyCameraTransform()
         {
@@ -27,12 +34,12 @@ namespace SaveTheGuy.Control
             _transform.LookAt(_target);
         }
 
-        private void SetPosition(Vector3 playerPosition)
+        private void SetPosition(Vector3 targetPosition)
         {
             var cameraPosition = new Vector3(
-                playerPosition.x + _cameraOffset.x,
-                playerPosition.y + _cameraOffset.y,
-                playerPosition.z + _cameraOffset.z);
+                targetPosition.x + _cameraOffset.x,
+                targetPosition.y + _cameraOffset.y,
+                targetPosition.z + _cameraOffset.z);
         
             _transform.position = cameraPosition;
         }

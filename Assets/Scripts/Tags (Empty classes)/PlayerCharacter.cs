@@ -1,4 +1,4 @@
-namespace SaveTheGuy.Characters
+namespace ColorManRun.Characters
 {
     public class PlayerCharacter : CharacterAwakeInit { }
 }
