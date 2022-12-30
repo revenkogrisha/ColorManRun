@@ -1051,6 +1051,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c524bd798e68cc24ea8fac698d169523, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _firstPlatformPrefab: {fileID: 4841758824331976803, guid: d016321c78d4154429644f5c07d8c132,
+    type: 3}
   _finishPlatformPrefab: {fileID: 529033114492968441, guid: 320bcf6fb60def740b580d822b923f31,
     type: 3}
   _platformsPrefabs:
