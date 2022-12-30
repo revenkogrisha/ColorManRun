@@ -20,27 +20,22 @@ namespace ColorManRun.Generators
         private readonly float _platformLength = 30f;
         private float _offset = 0f;
 
-        public FinishTarget GenerateSurface()
+        public FinishTarget GenerateSurface(Color[] colors)
         {
-            for (var i = 0; i < _platformsPerLevel; i++)
-            {
-                var lastPlatformIndex = _platformsPerLevel - 1;
-                if (i == lastPlatformIndex)
-                {
-                    var finishTarget = SpawnFinishPlatform();
-                    return finishTarget;
-                }
+            SpawnPlatform(_firstPlatformPrefab);
+            for (var i = 1; i < _platformsPerLevel - 1; i++)
+                SpawnRandomPlatform(colors);
 
-                SpawnRandomPlatform();
-            }
-
-            throw new System.Exception("Finish wasn't assingned within 'for' cycle!");
+            var finishTarget = SpawnFinishPlatform();
+            return finishTarget;
         }
 
-        private void SpawnRandomPlatform()
+        private void SpawnRandomPlatform(Color[] colors)
         {
-            var random = Random.Range(0, _platformsPrefabs.Length);
-            var platform = _platformsPrefabs[random];
+            var randomPlatformIndex = Random.Range(0, _platformsPrefabs.Length);
+            var platform = _platformsPrefabs[randomPlatformIndex];
+
+            platform = SetPlatformColor(colors, platform);
 
             SpawnPlatform(platform);
             _offset += _platformLength;
@@ -50,6 +45,14 @@ namespace ColorManRun.Generators
         {
             var platform = SpawnPlatform(_finishPlatformPrefab);
             return GetFinishTarget(platform);
+        }
+
+        private ColorPlatform SetPlatformColor(Color[] colors, ColorPlatform platform)
+        {
+            var randomColorsIndex = Random.Range(0, colors.Length);
+            var color = colors[randomColorsIndex];
+            platform.SetColor(color);
+            return platform;
         }
 
         private T SpawnPlatform<T>(T prefab)
