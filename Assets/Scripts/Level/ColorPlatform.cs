@@ -1,16 +1,20 @@
+using ColorManRun.ColorFeatures;
 using UnityEngine;
 
 namespace ColorManRun.Level
 {
     public class ColorPlatform : Platform
     {
-        private Color _color;
+        [SerializeField] private MeshRenderer _groundRenderer;
 
-        public Color Color => _color;
+        private GameColor _color;
 
-        public void SetColor(Color color)
+        public GameColor Color => _color;
+
+        public void SetColor(GameColor color, Material material)
         {
             _color = color;
+            _groundRenderer.material = material;
         }
     }
 }
