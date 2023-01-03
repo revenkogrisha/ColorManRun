@@ -1,4 +1,9 @@
-public interface IMoveableCharacterFactory : ICharacterFactory
+using ColorManRun.Characters;
+
+namespace ColorManRun.Factories
 {
-    public Character SetupMovement(Character character);
+    public interface IMoveableCharacterFactory : ICharacterFactory
+    {
+        public T SetupMovement<T>(T character) where T : Character;
+    }
 }

@@ -1,4 +1,9 @@
-public interface ICharacterFactory
+using ColorManRun.Characters;
+
+namespace ColorManRun.Factories
 {
-    public Character InitStats(Character character, StatsConfig config);
+    public interface ICharacterFactory
+    {
+        public Character InitStats(Character character, StatsConfig config);
+    }
 }

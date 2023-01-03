@@ -62,7 +62,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2fa44f0e9a83b1046b00359ec23ca3d5, type: 2}
+  - {fileID: 2100000, guid: f56405373e49b38458f1f55a99a9f677, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -106,7 +106,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7366864679453621065}
-  - component: {fileID: -6961551687433552585}
+  - component: {fileID: 8214008532344157674}
   m_Layer: 0
   m_Name: Platform#1
   m_TagString: Untagged
@@ -130,7 +130,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-6961551687433552585
+--- !u!114 &8214008532344157674
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -139,6 +139,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7366864679453621064}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3f96aa92a00d44442924575fc11ccff2, type: 3}
+  m_Script: {fileID: 11500000, guid: db6094c5d7b8eaf418b84747d128ce80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _groundRenderer: {fileID: 2364164969773365376}

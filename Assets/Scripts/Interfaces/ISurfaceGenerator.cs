@@ -1,4 +1,9 @@
-public interface ISurfaceGenerator
+using ColorManRun.Level;
+
+namespace ColorManRun.Generators
 {
-    public void Generate();
+    public interface ISurfaceGenerator
+    {
+        public FinishTarget GenerateSurface();
+    }
 }

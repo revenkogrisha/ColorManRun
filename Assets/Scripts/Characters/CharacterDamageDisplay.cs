@@ -1,57 +1,58 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using DG.Tweening;
+using UnityEngine;
 
-public class CharacterDamageDisplay : MonoBehaviour
+namespace ColorManRun.Characters
 {
-    [SerializeField] private Character _character;
-
-    [Header("Scale")]
-    [SerializeField] [Range(0f, 0.3f)] private float _scaleDuration;
-    [SerializeField] [Range(0.5f, 1f)] private float _scaleAmount;
-    [SerializeField] [Range(0f, 1)] private float _displayDurationInSeconds;
-
-    private float _destroyDelay = 1f;
-
-    #region MonoBehaviour
-
-    private void OnEnable()
+    public class CharacterDamageDisplay : MonoBehaviour
     {
-        _character.OnDamageTaken += DisplayDamage;
-        _character.OnCharacterDied += DisplayDeath;
-    }
+        [SerializeField] private Character _character;
 
-    private void OnDisable()
-    {
-        _character.OnDamageTaken -= DisplayDamage;
-        _character.OnCharacterDied -= DisplayDeath;
-    }
+        [Header("Scale")]
+        [SerializeField] [Range(0f, 0.3f)] private float _scaleDuration;
+        [SerializeField] [Range(0.5f, 1f)] private float _scaleAmount;
+        [SerializeField] [Range(0f, 1)] private float _displayDurationInSeconds;
 
-    #endregion
+        private float _destroyDelay = 1f;
 
-    public void DisplayDamage()
-    {
-        DisplayScale();
-    }
+        #region MonoBehaviour
 
-    private void DisplayScale()
-    {
-        DOTween.Sequence()
-            .Append(transform.DOScale(.8f, _scaleDuration))
-            .Append(transform.DOScale(1f, _scaleDuration));
-    }
+        private void OnEnable()
+        {
+            _character.OnDamageTaken += DisplayDamage;
+            _character.OnCharacterDied += DisplayDeath;
+        }
 
-    private void DisplayDeath()
-    {
-        DOTween.Sequence()
-            .Append(transform.DOScale(0f, _scaleDuration))
-            .AppendInterval(_destroyDelay)
-            .AppendCallback(ApplyDeath);
-    }
+        private void OnDisable()
+        {
+            _character.OnDamageTaken -= DisplayDamage;
+            _character.OnCharacterDied -= DisplayDeath;
+        }
 
-    private void ApplyDeath()
-    {
-        Destroy(gameObject);
+        #endregion
+
+        public void DisplayDamage()
+        {
+            DisplayScale();
+        }
+
+        private void DisplayScale()
+        {
+            DOTween.Sequence()
+                .Append(transform.DOScale(.8f, _scaleDuration))
+                .Append(transform.DOScale(1f, _scaleDuration));
+        }
+
+        private void DisplayDeath()
+        {
+            DOTween.Sequence()
+                .Append(transform.DOScale(0f, _scaleDuration))
+                .AppendInterval(_destroyDelay)
+                .AppendCallback(ApplyDeath);
+        }
+
+        private void ApplyDeath()
+        {
+            Destroy(gameObject);
+        }
     }
 }
