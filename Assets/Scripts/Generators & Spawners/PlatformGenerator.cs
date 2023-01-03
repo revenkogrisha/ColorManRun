@@ -1,10 +1,14 @@
 using ColorManRun.Level;
+using ColorManRun.ColorFeatures;
 using UnityEngine;
 
 namespace ColorManRun.Generators
 {
     public class PlatformGenerator : MonoBehaviour, ISurfaceGenerator
     {
+        [Header("Components")]
+        [SerializeField] private ColorTrioPicker _colorPicker;
+
         [Header("Platforms")]
         [SerializeField] private FirstPlatform _firstPlatformPrefab;
         [SerializeField] private FinishPlatform _finishPlatformPrefab;
@@ -20,25 +24,23 @@ namespace ColorManRun.Generators
         private readonly float _platformLength = 30f;
         private float _offset = 0f;
 
-        public FinishTarget GenerateSurface(Color[] colors)
+        public FinishTarget GenerateSurface()
         {
             SpawnPlatform(_firstPlatformPrefab);
             for (var i = 1; i < _platformsPerLevel - 1; i++)
-                SpawnRandomPlatform(colors);
+                SpawnRandomPlatform();
 
-            var finishTarget = SpawnFinishPlatform();
-            return finishTarget;
+            return SpawnFinishPlatform();
         }
 
-        private void SpawnRandomPlatform(Color[] colors)
+        private void SpawnRandomPlatform()
         {
             var randomPlatformIndex = Random.Range(0, _platformsPrefabs.Length);
             var platform = _platformsPrefabs[randomPlatformIndex];
 
-            platform = SetPlatformColor(colors, platform);
+            platform = SetPlatformColor(platform);
 
             SpawnPlatform(platform);
-            _offset += _platformLength;
         }
 
         private FinishTarget SpawnFinishPlatform()
@@ -47,11 +49,12 @@ namespace ColorManRun.Generators
             return GetFinishTarget(platform);
         }
 
-        private ColorPlatform SetPlatformColor(Color[] colors, ColorPlatform platform)
+        private ColorPlatform SetPlatformColor(ColorPlatform platform)
         {
-            var randomColorsIndex = Random.Range(0, colors.Length);
-            var color = colors[randomColorsIndex];
-            platform.SetColor(color);
+            var color = _colorPicker.GetRandomColor();
+            var material = _colorPicker.GetMaterialByColor(color);
+
+            platform.SetColor(color, material);
             return platform;
         }
 
@@ -60,6 +63,7 @@ namespace ColorManRun.Generators
         {
             var position = Vector3.forward * _offset;
             var platform = Instantiate(prefab, position, Quaternion.identity);
+            _offset += _platformLength;
             return TrySetParent(platform);
         }
 

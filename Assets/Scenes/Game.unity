@@ -955,6 +955,7 @@ GameObject:
   - component: {fileID: 1980677728}
   - component: {fileID: 1980677730}
   - component: {fileID: 1980677732}
+  - component: {fileID: 1980677733}
   - component: {fileID: 1980677731}
   m_Layer: 0
   m_Name: GameStart
@@ -1051,6 +1052,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c524bd798e68cc24ea8fac698d169523, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _colorPicker: {fileID: 1980677733}
   _firstPlatformPrefab: {fileID: 4841758824331976803, guid: d016321c78d4154429644f5c07d8c132,
     type: 3}
   _finishPlatformPrefab: {fileID: 529033114492968441, guid: 320bcf6fb60def740b580d822b923f31,
@@ -1058,7 +1060,22 @@ MonoBehaviour:
   _platformsPrefabs:
   - {fileID: 8214008532344157674, guid: 13a51b9ada385d24694f7bf1064a8604, type: 3}
   _parent: {fileID: 830363576}
-  _platformsPerLevel: 3
+  _platformsPerLevel: 5
+--- !u!114 &1980677733
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1980677726}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0ea05cfdd0b33541a84d713d17c9b4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _blue: {fileID: 2100000, guid: 9185fc106c32ad849be761adc634269a, type: 2}
+  _red: {fileID: 2100000, guid: e553384f847a96446a8523ad19d2c00f, type: 2}
+  _green: {fileID: 2100000, guid: f56405373e49b38458f1f55a99a9f677, type: 2}
 --- !u!1 &1996777551
 GameObject:
   m_ObjectHideFlags: 0
