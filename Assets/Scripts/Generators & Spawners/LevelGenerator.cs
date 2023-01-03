@@ -1,5 +1,4 @@
 using ColorManRun.Characters;
-using ColorManRun.ColorFeatures;
 using ColorManRun.Level;
 using System;
 using UnityEngine;
@@ -38,9 +37,7 @@ namespace ColorManRun.Generators
 
         private FinishTarget GenerateSuface(NavMeshSurface surface)
         {
-            var colorPicker = new ColorTrioPicker();
-            var colors = colorPicker.ColorTrio;
-            var finish = _surfaceGenerator.GenerateSurface(colors);
+            var finish = _surfaceGenerator.GenerateSurface();
             _navGenerator.GenerateSurface(surface);
             return finish;
         }
